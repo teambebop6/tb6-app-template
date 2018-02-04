@@ -1,3 +1,6 @@
+
+![TeamBebop6](./logo.png)
+
 ## tb6-app
 
 A template for Team bebop 6 app.
