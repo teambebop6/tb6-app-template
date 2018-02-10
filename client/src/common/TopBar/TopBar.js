@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
-import Logo from '../res/images/logo.svg';
+import Logo from '../../res/images/logo.svg';
 
 export default class MenuExampleStackable extends Component {
   state = {};
