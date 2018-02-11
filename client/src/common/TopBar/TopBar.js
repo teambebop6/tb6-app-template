@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 import Logo from '../../res/images/logo.svg';
+import { Link } from 'react-router-dom';
 
 export default class MenuExampleStackable extends Component {
   state = {};
@@ -15,8 +16,11 @@ export default class MenuExampleStackable extends Component {
 
     return (
       <Menu stackable>
-        <Menu.Item>
-          <img src={Logo}/>
+        <Menu.Item
+          as={Link}
+          to="/"
+        >
+          <img src={Logo} alt="Logo"/>
         </Menu.Item>
 
         <Menu.Item
@@ -39,6 +43,8 @@ export default class MenuExampleStackable extends Component {
           name='sign-in'
           active={activeItem === 'sign-in'}
           onClick={this.handleItemClick}
+          as={Link}
+          to="/admin/"
         >
           Sign-in
         </Menu.Item>
