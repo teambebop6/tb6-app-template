@@ -5,8 +5,10 @@ import React, { Component } from 'react';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import { authenticate } from '../../modules/auth';
+import Logo from '../../../res/images/tb6-logo.svg';
+import './LoginPage.less';
 
 class Login extends Component {
 
@@ -38,12 +40,51 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onSubmit} method={'post'}>
-          <input type="text" name={'username'} value={this.state.value.username} onChange={this.onChange}/>
-          <input type="password" name={'password'} value={this.state.value.password} onChange={this.onChange}/>
-          <button type={'submit'} disabled={this.props.isAuthenticating}> Submit</button>
-        </form>
+      <div className={'login-form'}>
+        <Grid
+          textAlign='center'
+          style={{ height: '100%' }}
+          verticalAlign='middle'
+        >
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as='h2' color='teal' textAlign='center'>
+              <Image src={Logo}/>
+              {' '}Login to Dashboard
+            </Header>
+            <Form size='large' method={'post'}>
+              <Segment stacked>
+                <Form.Input
+                  fluid
+                  icon='user'
+                  iconPosition='left'
+                  placeholder='E-mail address'
+                  value={this.state.value.username}
+                  name={'username'}
+                  onChange={this.onChange}
+                />
+                <Form.Input
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Password'
+                  type='password'
+                  value={this.state.value.password}
+                  name={'password'}
+                  onChange={this.onChange}
+                />
+                <Button
+                  color='teal'
+                  fluid
+                  size='large'
+                  disabled={this.props.isAuthenticating}
+                  onClick={this.onSubmit}
+                >
+                  Login
+                </Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     )
   }
