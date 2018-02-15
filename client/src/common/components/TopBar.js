@@ -16,8 +16,11 @@ export default class TopBar extends Component {
 
     return (
       <Menu stackable>
-        <Menu.Item>
-          <img src={Logo}/>
+        <Menu.Item
+          as={Link}
+          to="/"
+        >
+          <img src={Logo} alt="Logo"/>
         </Menu.Item>
 
         <Menu.Item
@@ -41,6 +44,8 @@ export default class TopBar extends Component {
           name='sign-in'
           active={activeItem === 'sign-in'}
           onClick={this.handleItemClick}
+          as={Link}
+          to="/admin/"
         >
           Sign-in
         </Menu.Item>
