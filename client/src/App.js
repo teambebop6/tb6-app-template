@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import AdminRouteContainer from './common/container/AdminRouteContainer';
+import AdminRouteContainer from './common/components/AdminRouteContainer';
 import routes from './routes';
+import './App.less';
 
 class App extends Component {
   render() {
     return (
-      <main style={{
-        height: '100%'
-      }}>
+      <main>
         <Switch>
           {
             routes.map((route, index) => {

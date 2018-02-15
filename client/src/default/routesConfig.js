@@ -1,7 +1,7 @@
 /**
  * Created by Henry Huang.
  */
-import Home from "./Home";
+import Home from "./pages/Home";
 
 export default [
   {
