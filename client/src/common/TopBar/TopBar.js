@@ -4,11 +4,12 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 import Logo from '../../res/images/logo.svg';
+import { Link } from 'react-router-dom';
 
-export default class MenuExampleStackable extends Component {
+export default class TopBar extends Component {
   state = {};
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
     const { activeItem } = this.state;
@@ -22,7 +23,8 @@ export default class MenuExampleStackable extends Component {
         <Menu.Item
           name='features'
           active={activeItem === 'features'}
-          onClick={this.handleItemClick}
+          as={Link}
+          to={'/admin'}
         >
           Features
         </Menu.Item>

@@ -6,7 +6,13 @@ class App extends Component {
     return (
       <main>
         {
-          routes
+          routes.map((route, index) => (
+            <div key={String(index)}>
+              {
+                route
+              }
+            </div>
+          ))
         }
       </main>
     );

@@ -4,9 +4,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
-import TopBar from '../common/TopBar/TopBar';
+import TopBar from '../../common/TopBar/TopBar';
 import { push } from "react-router-redux";
-import { authenticate } from "./modules/auth";
+import { authenticate } from "../modules/auth";
 import { bindActionCreators } from "redux";
 
 class Home extends Component {
