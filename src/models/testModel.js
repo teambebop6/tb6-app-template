@@ -6,7 +6,9 @@ autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose.connection);
 
 TestModel = new mongoose.Schema({
-  id: Number,
+  _id: Number,
+  title: String,
+  avatar: Object,
   order: {
     type: Number,
     default: -1
