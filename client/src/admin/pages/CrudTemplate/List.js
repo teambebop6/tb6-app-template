@@ -5,6 +5,8 @@
 import React, { Component } from 'react';
 import { Grid, Table, Button} from 'semantic-ui-react';
 
+import { Link } from 'react-router-dom';
+
 import TopBar from '../../common/components/TopBar';
 
 var axios = require('axios');
@@ -34,7 +36,7 @@ export default class List extends Component {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
-              <a className="ui button" href="./add">Create new element</a>
+              <Link className="ui button" to="./add">Create new element</Link>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
