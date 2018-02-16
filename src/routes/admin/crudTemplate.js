@@ -59,7 +59,7 @@ router.post('/add', upload.fields(
   // ...
 
   item.save((err) => {
-    if(err){ res.status(500).json(err); }
+    if(err){ return res.status(500).json(err); }
 
     // OK
     res.json({status: 200});
@@ -76,17 +76,26 @@ router.get('/item/:id', (req, res) => {
 });
 
 // Update
-router.post('/item/:id', (req, res) => {
+router.post('/item/:id', upload.fields(
+[
+  { name: 'avatar', maxCount: 1 },
+]
+), (req, res, next) => {
   Model.findOne({_id: req.params.id}, (err, item) => {
     if(err){ return res.status(500).json(err); }
 
     // TODO: assign all properties except creation date and _id
-    var id = item._id;
-    item = req.body.item;
-    item._id = id;
+    let req_item = JSON.parse(req.body.item);
+    req_item._id = item._id;
+
+    for (var property in req_item) {
+      if (req_item.hasOwnProperty(property)) {
+        item[property] = req_item[property]
+      }
+    } 
 
     item.save((err) => {
-      if(err){ res.status(500).json(err); }
+      if(err){ return res.status(500).json(err); }
 
       // OK
       res.json({status: 200});
@@ -98,7 +107,7 @@ router.post('/item/:id', (req, res) => {
 router.post('/delete', (req, res) => {
   Model.findOne({_id: req.body.id}).remove().exec((err) => {
     if(err){ return res.status(500).json(err); }
-    
+
     // OK
     res.json({status: 200});
   });
