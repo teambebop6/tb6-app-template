@@ -1,5 +1,6 @@
 import List from './List';
 import Add from './Add';
+import Modify from './Modify';
 
 export default [
   {
@@ -9,9 +10,15 @@ export default [
     admin: true,
   },
   {
+    path: '/modify/:id',
+    component: Modify,
+    exact: true,
+    admin: true,
+  },
+  {
     path: '/',
     component: List,
     exact: false,
     admin: true,
-  }
+  },
 ]
