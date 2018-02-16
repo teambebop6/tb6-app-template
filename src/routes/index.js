@@ -1,4 +1,5 @@
 import express from 'express';
+import auth from './auth';
 
 // Load subroutes
 import admin_router from './admin'
@@ -13,8 +14,10 @@ router.use('/admin', admin_router)
 
 router.get('/', (req, res) => {
   res.json({
-    message: 'Welcome to TB6.'
+    result: 'Welcome to TB6.'
   });
 });
+
+router.use('/auth', auth);
 
 module.exports = router;

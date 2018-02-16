@@ -2,17 +2,9 @@
  * Created by Henry Huang.
  */
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from './default/Home';
-import AdminRouter from './admin/routes';
+import adminRoute from './admin/routesConfig';
+import defaultRoute from './default/routesConfig';
 
-const router = (
-  <Router>
-    <div>
-      <Route exact path="/" component={Home}/>
-      <Route path="/admin/" component={AdminRouter}/>
-    </div>
-  </Router>
-);
+const routes = defaultRoute.concat(adminRoute);
 
-export default router;
+export default routes;
