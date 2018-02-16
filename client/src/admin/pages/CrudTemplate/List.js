@@ -3,7 +3,7 @@
  * basic crud template
  */
 import React, { Component } from 'react';
-import { Grid, Table, Button} from 'semantic-ui-react';
+import { Grid, Table, Button, Checkbox } from 'semantic-ui-react';
 
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ export default class List extends Component {
   };
 
   componentDidMount() {
-    axios.get(`/api/admin/`)
+    axios.get(`/api/admin/crudTemplate/`)
       .then(response => {
         console.log(response.data);
         this.setState({items: response.data})
@@ -77,15 +77,16 @@ export default class List extends Component {
                         </td>
 
                         <td>
-                          <div className="ui slider checkbox visible_checkbox">
-                            <input type="checkbox" checked={item.visible} data-id={item._id}  />
-                            <label></label>
-                          </div>
+                            <Checkbox slider
+                              checked={item.visible} 
+                              data-id={item._id}
+                              className="visible_checkbox"
+                            />
                         </td>
                         <td>
-                          <a className="ui icon button" href="{this.root}/modify/{item._id}">
+                          <Link to={"./modify/"+item._id} className="ui icon button">
                             <i className="write icon"></i>
-                          </a>
+                          </Link>
                           <Button className="red icon remove-item" data-id="{item._id}">
                             <i className="remove icon"></i>
                           </Button>
