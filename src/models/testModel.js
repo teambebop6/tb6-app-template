@@ -8,6 +8,7 @@ autoIncrement.initialize(mongoose.connection);
 TestModel = new mongoose.Schema({
   _id: Number,
   title: String,
+  detail: String,
   avatar: Object,
   order: {
     type: Number,
