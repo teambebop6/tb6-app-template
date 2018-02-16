@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
-import TopBar from '../../common/components/TopBar';
+import TopBar from '../common/components/TopBar';
 import { push } from "react-router-redux";
 import { authenticate } from "../modules/auth";
 import { bindActionCreators } from "redux";
