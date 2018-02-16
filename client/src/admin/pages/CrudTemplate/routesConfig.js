@@ -1,17 +1,16 @@
 import List from './List';
-import Add from './Add';
-import Modify from './Modify';
+import Edit from './Edit';
 
 export default [
   {
     path: '/add',
-    component: Add,
+    component: Edit,
     exact: true,
     admin: true,
   },
   {
     path: '/modify/:id',
-    component: Modify,
+    component: Edit,
     exact: true,
     admin: true,
   },
