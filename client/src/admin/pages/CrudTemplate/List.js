@@ -8,7 +8,7 @@ import { Button, Checkbox, Grid, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import TopBar from '../../common/components/TopBar';
-import { get } from '../../helpers/api';
+import { get } from '../../../common/helpers/api';
 
 export default class List extends Component {
   state = {

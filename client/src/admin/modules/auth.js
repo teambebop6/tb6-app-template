@@ -1,7 +1,7 @@
 /**
  * Created by Henry Huang.
  */
-import { post } from '../helpers/api';
+import { post } from '../../common/helpers/api';
 
 export const AUTH_REQUESTED = 'auth/AUTH_REQUESTED';
 export const AUTH_ALLOWED = 'auth/AUTH_ALLOWED';
