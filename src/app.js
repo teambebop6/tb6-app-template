@@ -23,14 +23,17 @@ app.locals.config = config;
 var mongoose = require('mongoose');
 var DB_PORT = (config.DB_PORT || '27017');
 
-mongoose.connect('mongodb://' + (config.DB_HOST || 'localhost') + ':' + DB_PORT + '/' + (process.env.DB_NAME || config.DB_NAME || DB_NAME));
+const mongoUrl = 'mongodb://' + (config.DB_HOST || 'localhost') + ':' + DB_PORT + '/' + (process.env.DB_NAME || config.DB_NAME || DB_NAME);
+mongoose.connect(mongoUrl);
 
 mongoose.connection.on('connected', function () {
   console.log('Mongoose connection open on port ' + DB_PORT);
 });
 
 mongoose.connection.on('error', function (err) {
-  console.log('Mongoose connection error: ' + err);
+  console.error('Mongoose connection error: ' + err);
+  console.error('Process will exit...');
+  process.exit(-1);
 });
 
 mongoose.connection.on('disconnected', function () {
