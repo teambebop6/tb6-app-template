@@ -1,7 +1,7 @@
 /**
  * Created by Henry Huang.
  */
-import { callApi } from '../helpers/api';
+import { post } from '../helpers/api';
 
 export const AUTH_REQUESTED = 'auth/AUTH_REQUESTED';
 export const AUTH_ALLOWED = 'auth/AUTH_ALLOWED';
@@ -17,7 +17,7 @@ export const authenticate = (username, password) => {
     dispatch({
       type: AUTH_REQUESTED,
     });
-    return callApi('/api/auth/login', {
+    return post('/api/auth/login', {
       username,
       password,
     }).then((json) => {
