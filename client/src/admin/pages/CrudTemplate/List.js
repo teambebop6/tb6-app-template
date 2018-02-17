@@ -3,14 +3,12 @@
  * basic crud template
  */
 import React, { Component } from 'react';
-import { Grid, Table, Button, Checkbox } from 'semantic-ui-react';
+import { Button, Checkbox, Grid, Table } from 'semantic-ui-react';
 
 import { Link } from 'react-router-dom';
 
 import TopBar from '../../common/components/TopBar';
-
-var axios = require('axios');
-
+import { get } from '../../helpers/api';
 
 export default class List extends Component {
   state = {
@@ -18,10 +16,10 @@ export default class List extends Component {
   };
 
   componentDidMount() {
-    axios.get(`/api/admin/crudTemplate/`)
-      .then(response => {
-        console.log(response.data);
-        this.setState({items: response.data})
+    get('/api/admin/crudTemplate/')
+      .then((data) => {
+        console.log(data);
+        this.setState({ items: data })
       })
   }
 
@@ -42,59 +40,59 @@ export default class List extends Component {
           <Grid.Row>
             <Table fluid="true">
               <thead>
-                <tr>
-                  <th width="10%">Bild</th>
-                  <th width="25%">Titel</th>
-                  <th width="35%">Beschreibung</th>
-                  <th width="10%">Sichtbar</th>
-                  <th>Aktionen</th>
-                </tr>
+              <tr>
+                <th width="10%">Bild</th>
+                <th width="25%">Titel</th>
+                <th width="35%">Beschreibung</th>
+                <th width="10%">Sichtbar</th>
+                <th>Aktionen</th>
+              </tr>
               </thead>
 
               <tbody>
 
-                {
-                  this.state.items.map((item) => {
+              {
+                this.state.items.map((item) => {
 
-                    // Avatar block
-                    function Avatar() {
-                      if(item.avatar){
-                        return (
-                          <img className="ui mini image" src="/assets/items/{item.avatar.filename}" alt="Avatar"/>
-                        )
-                      }
-
-                      return <div/>
+                  // Avatar block
+                  function Avatar() {
+                    if (item.avatar) {
+                      return (
+                        <img className="ui mini image" src="/assets/items/{item.avatar.filename}" alt="Avatar"/>
+                      )
                     }
 
-                    return (
-                      <tr key={item._id}>
-                        <td>
-                          <Avatar />
-                        </td>
-                        <td>
-                          {item.title} 
-                        </td>
+                    return <div/>
+                  }
 
-                        <td>
-                            <Checkbox slider
-                              checked={item.visible} 
-                              data-id={item._id}
-                              className="visible_checkbox"
-                            />
-                        </td>
-                        <td>
-                          <Link to={"./modify/"+item._id} className="ui icon button">
-                            <i className="write icon"></i>
-                          </Link>
-                          <Button className="red icon remove-item" data-id="{item._id}">
-                            <i className="remove icon"></i>
-                          </Button>
-                        </td>
-                      </tr>
-                    )
-                  })
-                }
+                  return (
+                    <tr key={item._id}>
+                      <td>
+                        <Avatar/>
+                      </td>
+                      <td>
+                        {item.title}
+                      </td>
+
+                      <td>
+                        <Checkbox slider
+                                  checked={item.visible}
+                                  data-id={item._id}
+                                  className="visible_checkbox"
+                        />
+                      </td>
+                      <td>
+                        <Link to={"./modify/" + item._id} className="ui icon button">
+                          <i className="write icon"></i>
+                        </Link>
+                        <Button className="red icon remove-item" data-id="{item._id}">
+                          <i className="remove icon"></i>
+                        </Button>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
               </tbody>
             </Table>
           </Grid.Row>
