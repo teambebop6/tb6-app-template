@@ -53,6 +53,10 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 }
+
+// Serve upload folder
+app.use('/assets/uploads', express.static(config.UPLOAD_FOLDER))
+
 app.use('/api', routes);
 
 // catch 404 and forward to error handler

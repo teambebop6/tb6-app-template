@@ -12,6 +12,7 @@ var path = require('path');
 var mkdirp = require('mkdirp');
 var crypto = require('crypto');
 var mime = require('mime');
+var fs = require('fs');
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ const Model = require('../../models/testModel');
 // Configure multipart handler & upload destination
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    var p = path.join(req.app.locals.config.UPLOAD_FOLDER, '/example/');
+    var p = path.join(req.app.locals.config.UPLOAD_FOLDER, '/items/');
     mkdirp.sync(p);
     cb(null, p)
   },
@@ -55,14 +56,15 @@ router.post('/add', upload.fields(
   console.log(item);
 
   // Files
-  item.avatar = req.files.avatar;
-  // ...
+  if(req.files.avatar && req.files.avatar.length > 0){
+    item.avatar = req.files.avatar[0];
+  }
 
   item.save((err) => {
     if(err){ return res.status(500).json(err); }
 
     // OK
-    res.json({status: 200});
+    res.json({ok: true});
   })
 });
 
@@ -75,7 +77,7 @@ router.get('/item/:id', (req, res) => {
   });
 });
 
-// Update
+// Update (expects multipart header)
 router.post('/item/:id', upload.fields(
 [
   { name: 'avatar', maxCount: 1 },
@@ -84,8 +86,8 @@ router.post('/item/:id', upload.fields(
   Model.findOne({_id: req.params.id}, (err, item) => {
     if(err){ return res.status(500).json(err); }
 
-    // TODO: assign all properties except creation date and _id
-    let req_item = JSON.parse(req.body.item);
+    let req_item = JSON.parse(req.body.item)
+
     req_item._id = item._id;
 
     for (var property in req_item) {
@@ -94,22 +96,40 @@ router.post('/item/:id', upload.fields(
       }
     } 
 
+    if(req.files.avatar && req.files.avatar.length > 0){
+      item.avatar = req.files.avatar[0]
+    }
+
     item.save((err) => {
       if(err){ return res.status(500).json(err); }
 
       // OK
-      res.json({status: 200});
+      res.json({ok: true});
     })
   });
 });
 
 // Delete
-router.post('/delete', (req, res) => {
-  Model.findOne({_id: req.body.id}).remove().exec((err) => {
+router.post('/delete', (req, res, next) => {
+  Model.findOne({_id: req.body.id}, (err, item) => {
     if(err){ return res.status(500).json(err); }
+    if(!item){ return res.status(500).json({message: "Item not found."}) }
 
-    // OK
-    res.json({status: 200});
+    item.remove((err) => {
+      if(err){ return res.status(500).json(err); }
+
+      // Delete related files
+      if(item.avatar){
+        fs.unlink(item.avatar.path, function (err) {
+          if (err) { console.log(err) }
+          else { console.log("Deleted image: " + item.avatar.path); }
+        });
+      }
+
+      // OK
+      res.json({ok:true});
+
+    })
   });
 });
 
