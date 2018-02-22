@@ -8,6 +8,7 @@ cache:
 addons:
   ssh_known_hosts: github.com
 before_install:
+- npm install -g cpx
 - bash ./.travis/checkout_secret.sh
 script:
 - npm run clean
