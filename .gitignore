@@ -115,3 +115,4 @@ fabric.properties
 
 client/node_modules
 dist
+dist.zip

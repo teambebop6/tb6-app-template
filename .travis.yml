@@ -12,7 +12,7 @@ before_install:
 script:
 - npm run build
 - npm run dist
-#- npm run upload
+- npm run upload
 branches:
   only:
   - master
