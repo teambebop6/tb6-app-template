@@ -1,13 +1,15 @@
 import express from 'express';
+import jwt from 'express-jwt';
 import auth from './auth';
-
+import adminRouter from './admin';
 // Load subroutes
-import admin_crud_router from './admin/crudTemplate'
+import config from "../config";
 
 const router = express.Router();
 
 // Initialize subroutes
-router.use('/admin/crudTemplate', admin_crud_router)
+// TODO currently only admin, so only check token is valid, do not check the role is admin or not
+router.use('/admin', jwt({ secret: config.token.secret }), adminRouter);
 
 router.get('/', (req, res) => {
   res.json({
