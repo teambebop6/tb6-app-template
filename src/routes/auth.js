@@ -3,7 +3,7 @@
  */
 import express from 'express';
 import { User } from '../models/index';
-import role from '../constants/role';
+import roleConst from '../constants/role';
 import jsonWebToken from 'jsonwebtoken';
 import jwt from 'express-jwt';
 import config from '../config';
@@ -59,7 +59,7 @@ router.post('/register', (req, res) => {
     username: username
   }).then((user) => {
     if (!user) {
-      const role = role.ADMIN; // TODO only admin now
+      const role = roleConst.ADMIN; // TODO only admin now
       new User({
         username: username,
         password: password,
@@ -92,6 +92,12 @@ router.post('/register', (req, res) => {
         ]
       })
     }
+  }).catch((error) => {
+    return res.status(500).json({
+      errors: [
+        error.message,
+      ]
+    })
   });
 });
 
