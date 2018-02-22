@@ -10,7 +10,12 @@ addons:
 before_install:
 - bash ./.travis/checkout_secret.sh
 script:
-- npm run build
+- npm run clean
+- npm run build:server
+- npm run build:client
+- npm run copy:client
+- npm run copy:package.json
+- npm run copy:pm2
 - npm run dist
 - npm run upload
 branches:
