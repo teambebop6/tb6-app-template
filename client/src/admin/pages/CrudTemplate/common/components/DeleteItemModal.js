@@ -1,42 +1,47 @@
-import React, { Component } from 'react'
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
 import { post } from '../../../../../common/helpers/api';
 
-export default class DeleteItemModal extends Component{
+class DeleteItemModal extends Component {
 
-  confirm(){
+  confirm() {
     console.log("Item id is:");
     console.log(this.props.itemId);
 
     post('/api/admin/crudTemplate/delete', {
       id: this.props.itemId
-    }).then((res) =>{
+    }, {
+      headers: {
+        Authorization: this.props.authorization,
+      }
+    }).then((res) => {
       console.log(res)
-      if(res.ok){
-        console.log("Successfully deleted")
+      if (res.ok) {
+        console.log("Successfully deleted");
         this.props.itemDeleted()
       }
       this.props.close()
 
-    }).catch((err) =>{
+    }).catch((err) => {
       console.log(err);
       this.props.close()
     });
   }
 
-  deny(){
+  deny() {
     this.props.close()
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
-        <Modal 
+        <Modal
           open={this.props.modalOpen}
           size='small'
         >
-          <Header icon='delete' content="Delete item" />
+          <Header icon='delete' content="Delete item"/>
           <Modal.Content>
             <p>
               Are you sure to delete this item?
@@ -44,10 +49,10 @@ export default class DeleteItemModal extends Component{
           </Modal.Content>
           <Modal.Actions>
             <Button color='red' onClick={this.deny.bind(this)}>
-              <Icon name='remove' /> No
+              <Icon name='remove'/> No
             </Button>
             <Button color='green' onClick={this.confirm.bind(this)}>
-              <Icon name='checkmark' /> Yes
+              <Icon name='checkmark'/> Yes
             </Button>
           </Modal.Actions>
         </Modal>
@@ -55,4 +60,12 @@ export default class DeleteItemModal extends Component{
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    authorization: `Bearer ${state.auth.token}`,
+  }
+};
+
+export default connect(mapStateToProps)(DeleteItemModal);
 

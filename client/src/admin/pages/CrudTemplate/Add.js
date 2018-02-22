@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-
-import EditItemForm from './common/components/EditItemForm'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import EditItemForm from './common/components/EditItemForm';
 
 import { post } from '../../../common/helpers/api';
 
-export default class Add extends Component { 
+class Add extends Component {
 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
       item: {
@@ -17,18 +17,23 @@ export default class Add extends Component {
         'visible': false,
         'avatar': null
       }
-    }
+    };
 
     this.submit = this.submit.bind(this);
   }
 
   // Form submit
-  submit (formData) {
+  submit(formData) {
     let history = this.props.history;
-    
-    post('/api/admin/crudTemplate/add', formData, { autoHeaders: true })
+
+    post('/api/admin/crudTemplate/add', formData, {
+      autoHeaders: true,
+      headers: {
+        Authorization: this.props.authorization,
+      }
+    })
       .then((res) => {
-        if(res.ok){
+        if (res.ok) {
           return history.push("./");
         }
       })
@@ -37,8 +42,8 @@ export default class Add extends Component {
       })
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <EditItemForm
         submit={this.submit}
         title="Add item"
@@ -48,3 +53,12 @@ export default class Add extends Component {
   }
 
 }
+
+const mapStateToProps = state => {
+  return {
+    authorization: `Bearer ${state.auth.token}`,
+  }
+};
+
+
+export default connect(mapStateToProps)(Add);

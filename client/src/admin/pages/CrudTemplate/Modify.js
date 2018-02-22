@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-
+import { connect } from 'react-redux';
 import EditItemForm from './common/components/EditItemForm'
 
 import { get, post } from '../../../common/helpers/api';
 
-
-export default class Modify extends Component{
-  constructor(props){
-    super(props)
+class Modify extends Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       item: {
@@ -17,39 +16,50 @@ export default class Modify extends Component{
         'visible': false,
         'avatar': null
       }
-    }
+    };
 
     this.submit = this.submit.bind(this);
   }
 
   componentDidMount() {
-    get(`/api/admin/crudTemplate/item/${this.props.match.params.id}`)
+    get(`/api/admin/crudTemplate/item/${this.props.match.params.id}`, {
+      headers: {
+        Authorization: this.props.authorization,
+      }
+    })
       .then(res => {
         console.log("Received item response:");
         console.log(res);
 
-        this.setState({item: res})
+        this.setState({ item: res })
       })
   }
 
   // Form submit
-  submit (formData) {
+  submit(formData) {
 
     let history = this.props.history;
 
-    // Update 
-    post('/api/admin/crudTemplate/item/'+this.state.item._id, formData, { autoHeaders: true })
+    // Update
+    post('/api/admin/crudTemplate/item/' + this.state.item._id, formData, {
+      autoHeaders: true,
+      Authorization: this.props.authorization,
+    })
       .then((res) => {
-        if(res.ok){
+        if (res.ok) {
           history.push("../");
-        }else{ console.log(res); }
+        } else {
+          console.log(res);
+        }
       })
-      .catch((err) => { console.log(err); });
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
 
-  render(){
-    return(
+  render() {
+    return (
       <EditItemForm
         item={this.state.item}
         submit={this.submit}
@@ -59,3 +69,11 @@ export default class Modify extends Component{
   }
 
 }
+
+const mapStateToProps = state => {
+  return {
+    authorization: `Bearer ${state.auth.token}`,
+  }
+};
+
+export default connect(mapStateToProps)(Modify);
