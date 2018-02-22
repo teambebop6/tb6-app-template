@@ -29,10 +29,9 @@ class Login extends Component {
     };
     this.onSubmit = (e) => {
       e.preventDefault();
-      console.log(this.state.value);
       const { authenticate } = props;
       const { username, password, } = this.state.value;
-      authenticate(username, password).then(() => {
+      authenticate(username, password).then((json) => {
         props.changePage('/admin');
       });
     }

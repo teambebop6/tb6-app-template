@@ -37,6 +37,7 @@ export const authenticate = (username, password) => {
         });
       }
     }).catch((error) => {
+      console.error(error);
       dispatch({
         type: AUTH_DECLINED,
       })
